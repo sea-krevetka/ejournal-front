@@ -4,13 +4,15 @@ import './ProfileSquare.css';
 const ProfileSquare = ({ userData }) => {
   return (
     <div className="pfp-square">
-      {userData?.avatar ? (
-        <img src={userData.avatar} alt="Profile" />
-      ) : (
-        <div className="profile-initials">
-          {userData?.name?.charAt(0) || 'U'}
-        </div>
-      )}
+      <div className="pfp-inner">
+        {userData?.avatar ? (
+          <img src={userData.avatar} alt="Profile" className="profile-img" />
+        ) : (
+          <div className="profile-initials">
+            {userData?.name?.charAt(0) || 'U'}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
