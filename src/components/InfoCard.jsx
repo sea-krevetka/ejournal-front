@@ -14,8 +14,11 @@ const InfoCard = ({ title, value, color, position }) => {
   };
 
   return (
-    <div className="info-card" style={style}>
-
+    <div className="info-card" style={positions[position]}>
+      <div className="pfp-block-inner">
+        <h3>{title}</h3>
+        <div className="card-value">{value}</div>
+      </div>
     </div>
   );
 };

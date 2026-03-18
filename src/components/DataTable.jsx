@@ -53,13 +53,15 @@ const DataTable = ({ data, type, title }) => {
 
   return (
     <div className="contfor-table">
-      <h2>{title}</h2>
-      <ReactTabulator
-        ref={tableRef}
-        columns={getColumns()}
-        data={tableData}
-        options={options}
-      />
+      <div className="pfp-block-inner">
+        <h2>{title}</h2>
+        <ReactTabulator
+          ref={tableRef}
+          columns={getColumns()}
+          data={tableData}
+          options={options}
+        />
+      </div>
     </div>
   );
 };

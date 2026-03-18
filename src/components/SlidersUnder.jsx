@@ -7,8 +7,10 @@ const SlidersUnder = () => {
 
   return (
     <div className="pfp-sliders-under">
-      <div className="slider-container">
-        
+      <div className="pfp-block-inner">
+        <div className="slider-container">
+          {/* slider content here */}
+        </div>
       </div>
     </div>
   );

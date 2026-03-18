@@ -59,9 +59,9 @@ function App() {
 
   // Пример данных для карточек
   const cardData = [
-    { id: 1, title: 'Успеваемость', value: '85%', color: '#5E3E9F' },
-    { id: 2, title: 'Посещаемость', value: '92%', color: '#5E3E9F' },
-    { id: 3, title: 'Рейтинг', value: '4.5', color: '#5E3E9F' }
+    { id: 1, title: 'test', value: 'test', color: '#5E3E9F' },
+    { id: 2, title: 'test', value: 'test', color: '#5E3E9F' },
+    { id: 3, title: 'test', value: 'test', color: '#5E3E9F' }
   ];
 
   return (

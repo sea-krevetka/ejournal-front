@@ -8,7 +8,9 @@ const Calendar = () => {
 
   return (
     <div className="pfp-calendar">
-
+      <div className="pfp-block-inner">
+        
+      </div>
     </div>
   );
 };
