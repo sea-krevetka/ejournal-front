@@ -1,64 +1,105 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api';
+const BACKEND_URL = 'http://localhost:8888';
 
 const api = {
-  async sendRequest(request) {
+  // Login endpoint
+  async login(login, password, role) {
     try {
-      const response = await axios.post(API_URL, request, {
+      const response = await axios.post(`${BACKEND_URL}/login`, {
+        login,
+        password,
+        role
+      }, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
       return response.data;
     } catch (error) {
-      console.error('API Error:', error);
+      console.error('Login Error:', error);
       throw error;
     }
   },
 
-  // Методы для конкретных запросов
-  async login(username, password) {
-    return this.sendRequest({
-      id: 'login',
-      action: 'login',
-      data: JSON.stringify({ username, password })
-    });
+  // Register endpoint
+  async register(login, password, role) {
+    try {
+      const response = await axios.post(`${BACKEND_URL}/register`, {
+        login,
+        password,
+        role
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Register Error:', error);
+      throw error;
+    }
   },
 
-  async register(userData) {
-    return this.sendRequest({
-      id: 'register',
-      action: 'register',
-      data: JSON.stringify(userData)
-    });
+  // Get profile using token
+  async getProfile(token) {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/profile`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Get Profile Error:', error);
+      throw error;
+    }
   },
 
-  async getUserData(token) {
-    return this.sendRequest({
-      id: 'getUserData',
-      action: 'getUserData',
-      token: token,
-      data: JSON.stringify({})
-    });
+  // Teacher: Create attendance link
+  async createAttendanceLink(token, lessonName, expiresMinutes) {
+    try {
+      const response = await axios.post(
+        `${BACKEND_URL}/api/teacher/attendance-link`,
+        {
+          lesson_name: lessonName,
+          expires_minutes: expiresMinutes
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+          }
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Create Attendance Link Error:', error);
+      throw error;
+    }
   },
 
-  async getStudentsList(token) {
-    return this.sendRequest({
-      id: 'getStudentsList',
-      action: 'getStudentsList',
-      token: token,
-      data: JSON.stringify({})
-    });
-  },
-
-  async getAttendance(token) {
-    return this.sendRequest({
-      id: 'getAttendance',
-      action: 'getAttendance',
-      token: token,
-      data: JSON.stringify({})
-    });
+  // Student: Confirm attendance
+  async confirmAttendance(token, attendanceId) {
+    try {
+      const response = await axios.post(
+        `${BACKEND_URL}/api/student/attendance/confirm`,
+        {
+          attendance_id: attendanceId
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+          }
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Confirm Attendance Error:', error);
+      throw error;
+    }
   }
 };
 
