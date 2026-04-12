@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { ReactTabulator } from 'react-tabulator';
 import 'tabulator-tables/dist/css/tabulator.min.css';
 import './DataTable.css';
@@ -46,10 +46,20 @@ const DataTable = ({ data, type, title }) => {
 
   // Пример данных для демонстрации
   const getSampleData = () => {
-  
+    if (type === 'students') {
+      return [
+        { id: 1, name: 'Иван Иванов', group: 'A-101', subject1: 'Математика', subject2: 'Физика', subject3: 'Информатика', subject4: 'Английский' }
+      ];
+    }
+    if (type === 'attendance') {
+      return [
+        { id: 1, name: 'Иван Иванов', date1: '✓', date2: '✓', date3: '✗', date4: '✓', date5: '✓' }
+      ];
+    }
+    return [];
   };
 
-  const tableData = data.length > 0 ? data : getSampleData();
+  const tableData = Array.isArray(data) && data.length > 0 ? data : getSampleData();
 
   return (
     <div className="contfor-table">
