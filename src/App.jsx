@@ -57,7 +57,7 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await api.login(login, password, role);
+      const response = await api.login(login, password);
       if (response?.token) {
         localStorage.setItem('token', response.token);
         setToken(response.token);
@@ -76,6 +76,30 @@ function App() {
     }
   };
 
+  const handleRegister = async (login, password, role, inviteCode) => {
+    setError('');
+    setLoading(true);
+
+    try {
+      const response = await api.register(login, password, role, inviteCode);
+      if (response?.token) {
+        localStorage.setItem('token', response.token);
+        setToken(response.token);
+        setUserData({
+          ...response,
+          name: response.login
+        });
+      } else {
+        throw new Error(response?.error || 'Не удалось зарегистрироваться');
+      }
+    } catch (err) {
+      setError(err.response?.data?.error || err.message || 'Ошибка регистрации');
+      console.error('Register failed:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     setToken('');
@@ -84,7 +108,7 @@ function App() {
   };
 
   if (!userData) {
-    return <LoginPage onLogin={handleLogin} loading={loading} error={error} />;
+    return <LoginPage onLogin={handleLogin} onRegister={handleRegister} loading={loading} error={error} />;
   }
 
   return (

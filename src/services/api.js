@@ -1,15 +1,14 @@
 import axios from 'axios';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8888';
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:9999';
 
 const api = {
   // Login endpoint
-  async login(login, password, role) {
+  async login(login, password) {
     try {
       const response = await axios.post(`${BACKEND_URL}/login`, {
         login,
-        password,
-        role
+        password
       }, {
         headers: {
           'Content-Type': 'application/json'
@@ -23,12 +22,13 @@ const api = {
   },
 
   // Register endpoint
-  async register(login, password, role) {
+  async register(login, password, role, inviteCode) {
     try {
       const response = await axios.post(`${BACKEND_URL}/register`, {
         login,
         password,
-        role
+        role,
+        invite_code: inviteCode
       }, {
         headers: {
           'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ const api = {
       const response = await axios.get(`${BACKEND_URL}/profile`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': token
+          'Authorization': `Bearer ${token}`
         }
       });
       return response.data;
@@ -58,18 +58,19 @@ const api = {
   },
 
   // Teacher: Create attendance link
-  async createAttendanceLink(token, lessonName, expiresMinutes) {
+  async createAttendanceLink(token, subjectId, lessonName, expiresMinutes) {
     try {
       const response = await axios.post(
         `${BACKEND_URL}/api/teacher/attendance-link`,
         {
+          subject_id: subjectId,
           lesson_name: lessonName,
           expires_minutes: expiresMinutes
         },
         {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': token
+            'Authorization': `Bearer ${token}`
           }
         }
       );
@@ -81,17 +82,17 @@ const api = {
   },
 
   // Student: Confirm attendance
-  async confirmAttendance(token, attendanceId) {
+  async confirmAttendance(token, inviteToken) {
     try {
       const response = await axios.post(
         `${BACKEND_URL}/api/student/attendance/confirm`,
         {
-          attendance_id: attendanceId
+          invite_token: inviteToken
         },
         {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': token
+            'Authorization': `Bearer ${token}`
           }
         }
       );
