@@ -24,12 +24,12 @@ const api = {
   // Register endpoint
   async register(login, password, role, inviteCode) {
     try {
-      const response = await axios.post(`${BACKEND_URL}/register`, {
-        login,
-        password,
-        role,
-        invite_code: inviteCode
-      }, {
+      const endpoint = (role === 'student' && inviteCode) ? '/register/by-invite' : '/register';
+      const body = role === 'student' && inviteCode
+        ? { login, password, invite_code: inviteCode }
+        : { login, password, role };
+
+      const response = await axios.post(`${BACKEND_URL}${endpoint}`, body, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -58,12 +58,13 @@ const api = {
   },
 
   // Teacher: Create attendance link
-  async createAttendanceLink(token, subjectId, lessonName, expiresMinutes) {
+  async createAttendanceLink(token, subjectId, groupIds, lessonName, expiresMinutes) {
     try {
       const response = await axios.post(
         `${BACKEND_URL}/api/teacher/attendance-link`,
         {
           subject_id: subjectId,
+          group_ids: groupIds,
           lesson_name: lessonName,
           expires_minutes: expiresMinutes
         },
