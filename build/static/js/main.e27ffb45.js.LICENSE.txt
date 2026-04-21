@@ -1,12 +1,12 @@
 /*!
-	 * html-attributes
-	 * https://github.com/alexmingoia/html-attributes
-	 */
+   * html-attributes
+   * https://github.com/alexmingoia/html-attributes
+   */
 
 /*!
-	 * svg-attributes
-	 * https://github.com/alexmingoia/svg-attributes
-	 */
+   * svg-attributes
+   * https://github.com/alexmingoia/svg-attributes
+   */
 
 /*!
  * @overview es6-promise - a tiny implementation of Promises/A+.
