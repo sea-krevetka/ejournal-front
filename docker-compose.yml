@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  web:
+    image: nginx:alpine
+    container_name: sibsutis_front
+    ports:
+      - "9999:80"
+    volumes:
+      - ./build:/usr/share/nginx/html:ro
+    restart: unless-stopped
+    develop:
+      watch:
+        - path: ./build
+          action: sync
+          target: /usr/share/nginx/html
